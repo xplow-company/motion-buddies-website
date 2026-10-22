@@ -105,12 +105,15 @@ export default function Home() {
             id="nav-brand-logo"
             className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 via-indigo-500 to-cyan-400 p-[1px] shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-shadow">
-              <div className="w-full h-full bg-[#0d0e15] rounded-[11px] flex items-center justify-center">
-                <span className="font-extrabold text-sm tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-300">
-                  MB
-                </span>
-              </div>
+            <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.1] p-1.5 shadow-lg shadow-orange-500/10 group-hover:border-orange-500/40 group-hover:shadow-orange-500/20 transition-all flex items-center justify-center">
+              <Image
+                src="/images/motion_buddies_icon.png"
+                alt="Motion Buddies Logo"
+                width={28}
+                height={28}
+                className="object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-bold tracking-tight text-base text-white group-hover:text-purple-300 transition-colors">
@@ -524,6 +527,13 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-zinc-500">
           <div className="flex items-center gap-3">
+            <Image
+              src="/images/motion_buddies_icon.png"
+              alt="Motion Buddies Logo"
+              width={20}
+              height={20}
+              className="object-contain"
+            />
             <span className="font-bold text-sm tracking-tight text-white">
               MOTION BUDDIES
             </span>
