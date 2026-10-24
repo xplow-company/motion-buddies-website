@@ -17,3 +17,9 @@ The A/B demo, "everywhere" and "rolling statement" controllers, the HUD/cue and 
 ## Still placeholders
 
 Pricing contents, FAQ answers, the illustrative brief/film copy and all five work pieces are concept content. The contact form only shows a local thank-you and is not wired to email or a CRM.
+
+## Work index auto-advance
+
+A piece's turn ends on its timeline's `onRepeat`, so one full loop is one play. The easing editor has no natural end, so its turn is a fixed 6.6s (two preset changes).
+Auto-advance runs only at desktop widths: on mobile the rows are an accordion and opening the next one would move the page while someone reads. Under reduced motion nothing plays, so nothing advances.
+The hand-over waits while the cursor is on the piece itself (the 3D and easing pieces are interactive), and hover picks a row once per entry so the cycle can move on while the cursor rests on a title.
