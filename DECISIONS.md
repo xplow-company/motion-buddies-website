@@ -23,3 +23,8 @@ Pricing contents, FAQ answers, the illustrative brief/film copy and all five wor
 A piece's turn ends on its timeline's `onRepeat`, so one full loop is one play. The easing editor has no natural end, so its turn is a fixed 6.6s (two preset changes).
 Auto-advance runs only at desktop widths: on mobile the rows are an accordion and opening the next one would move the page while someone reads. Under reduced motion nothing plays, so nothing advances.
 The hand-over waits while the cursor is on the piece itself (the 3D and easing pieces are interactive), and hover picks a row once per entry so the cycle can move on while the cursor rests on a title.
+## How we work section
+
+Ported from the approved split files into `src/motion/how-we-work.ts` with copy, layout and timing unchanged.
+The canvases read the logo from the site's existing `#mb` symbol rather than a second `#mbm` copy, and resolve the hashed `next/font` family name at runtime for canvas text.
+The heading's full stop is a `data-buddy` anchor, so the site's ball lands on it like every other section heading. Global `gsap.defaults` from the original script was dropped because every tween already sets its own ease and duration.

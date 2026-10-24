@@ -14,6 +14,6 @@ npm run build && npm start
 
 - `src/app/` — layout (fonts, metadata), page, global styles.
 - `src/components/` — static section markup (`sections.tsx`, `work.tsx`) and the `Motion` client component.
-- `src/motion/` — the motion runtime: the full-stop ball (`buddy.ts`), hero dot grid (`grid.ts`), process scene (`process.ts`), work pieces (`work.ts`), reveals/scroll/FAQ/form (`page.ts`).
+- `src/motion/` — the motion runtime: the full-stop ball (`buddy.ts`), hero dot grid (`grid.ts`), how-we-work canvas scenes (`how-we-work.ts`), work pieces (`work.ts`), reveals/scroll/FAQ/form (`page.ts`).
 
 See `DECISIONS.md` for why motion is imperative and what is still placeholder content.
