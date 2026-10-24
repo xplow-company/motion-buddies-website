@@ -28,3 +28,8 @@ The hand-over waits while the cursor is on the piece itself (the 3D and easing p
 Ported from the approved split files into `src/motion/how-we-work.ts` with copy, layout and timing unchanged.
 The canvases read the logo from the site's existing `#mb` symbol rather than a second `#mbm` copy, and resolve the hashed `next/font` family name at runtime for canvas text.
 The heading's full stop is a `data-buddy` anchor, so the site's ball lands on it like every other section heading. Global `gsap.defaults` from the original script was dropped because every tween already sets its own ease and duration.
+
+## Reload opens on the hero
+
+The inline head script sets `history.scrollRestoration = "manual"` and, only on a reload, drops the URL hash before the browser jumps to it.
+A first visit to a link like `/#pricing` keeps its hash, so shared section links still work. Smooth scrolling made the restored position look like the page dragging itself down.
