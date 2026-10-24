@@ -2,22 +2,24 @@ import { gsap } from "gsap";
 import { $, $$, clamp, lerp, type Env } from "./kit";
 
 type Extra = { start: () => void; stop: () => void };
-type Ctl = { tl: gsap.core.Animation; on: boolean; vis: boolean; extra?: Extra };
+type Piece = { tl: gsap.core.Timeline; reset?: () => void; extra?: Extra };
+type Ctl = Piece & { on: boolean; vis: boolean };
 
 const NS = "http://www.w3.org/2000/svg";
 const lines = (c: Element) => $$(".ml b", c);
 
-function film(): Ctl["tl"] {
+function film(): Piece {
   const root = $(".film"), cards = $$(".cd", root), php = $(".php", root);
   let z = 3;
   const tl = gsap.timeline({ repeat: -1 });
-  tl.add(() => {
+  const reset = () => {
     gsap.set(cards.slice(1), { clipPath: "inset(0 0 0 100%)", zIndex: 1, xPercent: 0 });
     gsap.set(cards[0], { clipPath: "inset(0 0 0 0)", xPercent: 0, zIndex: 1 });
     gsap.set(lines(cards[0]), { yPercent: 0 });
     gsap.set([...lines(cards[1]), ...lines(cards[2])], { yPercent: 125 });
     z = 3;
-  }, 0);
+  };
+  tl.add(reset, 0);
   tl.fromTo(php, { left: "0%" }, { left: "100%", duration: 6.8, ease: "none", immediateRender: false }, 0);
   [1, 2].forEach((i) => {
     const t = i * 2;
@@ -35,10 +37,10 @@ function film(): Ctl["tl"] {
   tl.to(cards[2], { xPercent: -10, duration: 0.85, ease: "expo.inOut" }, 6);
   tl.to(lines(cards[0]), { yPercent: 0, duration: 0.9, ease: "expo.out", stagger: 0.09 }, 6.35);
   tl.to({}, { duration: 0.01 }, 6.79);
-  return tl;
+  return { tl, reset };
 }
 
-function explainer(): Ctl["tl"] {
+function explainer(): Piece {
   const root = $(".ex"), dg = $<SVGGElement>(".dots", root), bg = $<SVGGElement>(".bars", root), H = [16, 30, 22, 46, 34];
   dg.replaceChildren();
   bg.replaceChildren();
@@ -67,12 +69,13 @@ function explainer(): Ctl["tl"] {
       onComplete: () => { gsap.set(pk[i], { opacity: 0 }); },
     }, t0);
   }
-  tl.add(() => {
+  const reset = () => {
     paths.forEach((p, i) => { p.style.strokeDasharray = String(lens[i]); p.style.strokeDashoffset = String(lens[i]); });
     gsap.set(cps, { opacity: 0, y: 8 }); gsap.set(dots, { opacity: 0.22, attr: { fill: "#fff" } }); gsap.set(bars, { scaleY: 0, transformOrigin: "50% 100%" });
     gsap.set(ring, { opacity: 0, scale: 1, transformOrigin: "50% 50%" }); gsap.set(pk, { opacity: 0 });
     gsap.set([mdl, card], { opacity: 1, scale: 1, transformOrigin: "50% 50%" }); gsap.set(labels, { opacity: 1 });
-  }, 0);
+  };
+  tl.add(reset, 0);
   tl.to(cps, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", stagger: 0.1 }, 0.2);
   tl.to(paths.slice(0, 3), { strokeDashoffset: 0, duration: 0.75, ease: "power2.inOut", stagger: 0.08 }, 0.7);
   [0, 1, 2].forEach((i) => along(i, 1.25 + i * 0.1, 0.9));
@@ -85,22 +88,23 @@ function explainer(): Ctl["tl"] {
   tl.to(bars, { scaleY: 1, duration: 0.8, ease: "back.out(1.5)", stagger: 0.08 }, 3.4);
   tl.to([...cps, ...paths, card, ...bars, ...dots, mdl], { opacity: 0, duration: 0.5, ease: "power2.in" }, 5.4);
   tl.to({}, { duration: 0.01 }, 5.99);
-  return tl;
+  return { tl, reset };
 }
 
-function ui(): Ctl["tl"] {
+function ui(): Piece {
   const root = $(".ui"), card = $(".ucard", root), num = $(".num", root), line = $<SVGPathElement>(".line", root), area = $(".area", root), tip = $(".tip", root);
   const items = $$(".ulist li", root), cks = $$(".ck", root), cki = $$(".ck svg", root), toast = $(".toast", root);
   const LEN = line.getTotalLength(), v = { n: 0 };
   const tl = gsap.timeline({ repeat: -1 });
-  tl.add(() => {
+  const reset = () => {
     num.textContent = "$0.0k";
     gsap.set(card, { opacity: 0, y: 30, scale: 1 }); gsap.set(items, { opacity: 0, y: 14, scale: 1 });
     line.style.strokeDasharray = String(LEN); line.style.strokeDashoffset = String(LEN);
     gsap.set(area, { opacity: 0 }); gsap.set(tip, { scale: 0, transformOrigin: "50% 50%" });
     gsap.set(cks, { backgroundColor: "rgba(0,0,0,0)", borderColor: "#4b4b52" }); gsap.set(cki, { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" });
     gsap.set(toast, { opacity: 0, y: -36 });
-  }, 0);
+  };
+  tl.add(reset, 0);
   tl.to(card, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.2);
   tl.to(line, { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, 0.55);
   tl.to(area, { opacity: 1, duration: 0.7 }, 1.1);
@@ -116,10 +120,10 @@ function ui(): Ctl["tl"] {
   tl.to(toast, { opacity: 0, y: -26, duration: 0.35, ease: "power2.in" }, 5.2);
   tl.to([card, ...items], { opacity: 0, duration: 0.4, ease: "power2.in" }, 5.65);
   tl.to({}, { duration: 0.01 }, 6.19);
-  return tl;
+  return { tl, reset };
 }
 
-function layers(env: Env): Pick<Ctl, "tl" | "extra"> {
+function layers(env: Env): Piece {
   const root = $(".l3d"), stack = $(".stack", root), pls = $$(".pl", root), shd = $(".shd", root), o = { e: 0 };
   let mxn = 0, myn = 0, ticking = false;
   stack.style.transform = "rotateX(58deg) rotateZ(-38deg)";
@@ -143,10 +147,11 @@ function layers(env: Env): Pick<Ctl, "tl" | "extra"> {
   };
   const stop = () => { if (ticking) { ticking = false; gsap.ticker.remove(tk); } };
   env.defer(stop);
-  return { tl, extra: { start: () => { if (!ticking) { ticking = true; gsap.ticker.add(tk); } }, stop } };
+  const reset = () => { o.e = 0; apply(); };
+  return { tl, reset, extra: { start: () => { if (!ticking) { ticking = true; gsap.ticker.add(tk); } }, stop } };
 }
 
-function easing(env: Env): Pick<Ctl, "tl" | "extra"> {
+function easing(env: Env): Piece {
   const root = $(".eas"), svg = $<SVGSVGElement>("svg.g", root), curve = $(".curve", root), c1 = $(".c1", root), c2 = $(".c2", root);
   const h1 = $(".h1", root), h2 = $(".h2", root), probe = $(".probe", root), ball = $(".ball", root), trk = $(".trk3", root), tiles = $$(".tl i", root), chips = $$(".chips button", root);
   const PR = [[0, 0, 1, 1], [0.7, 0, 0.2, 1], [0.16, 1, 0.3, 1], [0.3, 1.4, 0.6, 1], [0.6, 1.45, 0.3, 1.18]];
@@ -208,16 +213,17 @@ function easing(env: Env): Pick<Ctl, "tl" | "extra"> {
   const stop = () => { loop.pause(); clearInterval(timer); };
   env.defer(stop);
   return {
-    tl: gsap.timeline({ paused: true }),
+    // The editor has no natural end, so its turn lasts two preset changes.
+    tl: gsap.timeline({ repeat: -1, paused: true }).to({}, { duration: 6.6 }),
     extra: { start: () => { loop.play(); clearInterval(timer); timer = window.setInterval(auto, 3300); }, stop },
   };
 }
 
 export function initWork(env: Env) {
   const ctl: Record<string, Ctl> = {
-    film: { tl: film(), on: true, vis: false },
-    ex: { tl: explainer(), on: false, vis: false },
-    ui: { tl: ui(), on: false, vis: false },
+    film: { ...film(), on: true, vis: false },
+    ex: { ...explainer(), on: false, vis: false },
+    ui: { ...ui(), on: false, vis: false },
     d3: { ...layers(env), on: false, vis: false },
     eas: { ...easing(env), on: false, vis: false },
   };
@@ -228,20 +234,41 @@ export function initWork(env: Env) {
   };
   Object.values(ctl).forEach(sync);
   const rows = $$(".row");
+  // Only the desktop layout auto-advances; on mobile the accordion would shift the page under the reader.
+  const desktop = matchMedia("(min-width: 981px)");
+  let overPiece = false, pending = false, hovered: HTMLElement | null = null;
   function activate(row: HTMLElement) {
+    pending = false;
     rows.forEach((r) => {
-      const on = r === row;
+      const on = r === row, c = ctl[r.dataset.p!];
+      if (on && !c.on) { c.reset?.(); c.tl.pause(0); }
       r.classList.toggle("on", on);
       $(".rh", r).setAttribute("aria-expanded", String(on));
-      const c = ctl[r.dataset.p!];
       c.on = on;
       sync(c);
     });
   }
+  const next = () => activate(rows[(rows.findIndex((r) => r.classList.contains("on")) + 1) % rows.length]);
   rows.forEach((r) => {
-    const h = $(".rh", r);
+    const h = $(".rh", r), c = ctl[r.dataset.p!];
+    // Each pass of the loop is one full play; when it ends, hand over to the next row.
+    c.tl.eventCallback("onRepeat", () => {
+      if (!c.on || !desktop.matches) return;
+      if (overPiece) pending = true;
+      else next();
+    });
     env.on(h, "click", () => activate(r));
-    if (env.fine) env.on(h, "pointermove", (e: PointerEvent) => { if (!r.classList.contains("on") && (e.movementX || e.movementY)) activate(r); });
+    if (env.fine) {
+      // Hover picks a row once per entry, so auto-advance can move on while the cursor rests.
+      env.on(h, "pointermove", (e: PointerEvent) => {
+        if (hovered !== r && !r.classList.contains("on") && (e.movementX || e.movementY)) { hovered = r; activate(r); }
+      });
+      env.on(h, "pointerleave", () => { if (hovered === r) hovered = null; });
+    }
+    // Hold the hand-over while someone is playing with the piece itself.
+    const piece = $(".piece", r);
+    env.on(piece, "pointerenter", () => { overPiece = true; });
+    env.on(piece, "pointerleave", () => { overPiece = false; if (pending && c.on) next(); });
   });
   env.watch($(".idx"), (v) => Object.values(ctl).forEach((c) => { c.vis = v; sync(c); }), "100px");
 }
