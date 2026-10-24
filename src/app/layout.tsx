@@ -44,8 +44,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={instrument.variable} suppressHydrationWarning>
       <body>
+        {/* A reload always opens on the hero: no restored scroll position and no #section jump. */}
         <Script id="js-class" strategy="beforeInteractive">
-          {`document.documentElement.classList.add("js")`}
+          {`document.documentElement.classList.add("js");history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"&&location.hash)history.replaceState(null,"",location.pathname+location.search)`}
         </Script>
         {children}
       </body>
