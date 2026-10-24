@@ -17,3 +17,9 @@ The A/B demo, "everywhere" and "rolling statement" controllers, the HUD/cue and 
 ## Still placeholders
 
 Pricing contents, FAQ answers, the illustrative brief/film copy and all five work pieces are concept content. The contact form only shows a local thank-you and is not wired to email or a CRM.
+
+## How we work section
+
+Ported from the approved split files into `src/motion/how-we-work.ts` with copy, layout and timing unchanged.
+The canvases read the logo from the site's existing `#mb` symbol rather than a second `#mbm` copy, and resolve the hashed `next/font` family name at runtime for canvas text.
+The heading's full stop is a `data-buddy` anchor, so the site's ball lands on it like every other section heading. Global `gsap.defaults` from the original script was dropped because every tween already sets its own ease and duration.
