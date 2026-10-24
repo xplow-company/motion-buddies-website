@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Caveat, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -48,12 +49,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // The inline script adds `js` before paint so reveal states never flash.
     <html lang="en" className={`${instrument.variable} ${caveat.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add("js")` }} />
-      </head>
-      <body>{children}</body>
+      <body>
+        <Script id="js-class" strategy="beforeInteractive">
+          {`document.documentElement.classList.add("js")`}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }
