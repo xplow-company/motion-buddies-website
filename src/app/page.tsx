@@ -1,6 +1,7 @@
 import { MarkSymbol } from "@/components/icons";
 import { Motion } from "@/components/motion";
-import { Contact, Faq, Hero, Nav, Premise, Pricing, Process } from "@/components/sections";
+import { HowWeWork } from "@/components/how-we-work";
+import { Contact, Faq, Hero, Nav, Premise, Pricing } from "@/components/sections";
 import { Work } from "@/components/work";
 
 export default function Home() {
@@ -12,7 +13,7 @@ export default function Home() {
       <main>
         <Hero />
         <Premise />
-        <Process />
+        <HowWeWork />
         <Work />
         <Faq />
         <Pricing />

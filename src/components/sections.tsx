@@ -52,65 +52,6 @@ export function Premise() {
   );
 }
 
-const STEPS = [
-  ["Brief", "A 30-minute call and a link to your product. We come back with the one idea the whole film is built on."],
-  ["Boards", "Every shot is sketched before anything moves, so you approve the story, not a guess."],
-  ["Style frames", "The look, locked in your brand. Type, colour and the key frames of the film."],
-  ["Animation", "Everything moves, with sound. You review cuts from a link and comment on the exact frame."],
-  ["Delivery", "Every ratio and cut-down you need, ready for your homepage, feeds and sales calls."],
-];
-
-export function Process() {
-  return (
-    <section className="flow bone" id="method">
-      <div className="fst">
-        <div className="fl-l">
-          <h2 className="rv">From brief to final frame<Pd /></h2>
-          <ol className="fsteps">
-            {STEPS.map(([t, d], i) => (
-              <li key={t} className={i === 0 ? "on" : undefined} data-i={i}>
-                <h3>{t}</h3>
-                <div className="fd2"><p>{d}</p></div>
-              </li>
-            ))}
-          </ol>
-        </div>
-        <div className="fl-r">
-          <div className="stg" aria-hidden="true">
-            <div className="bf">
-              <h4>Launch film, 60 seconds</h4>
-              <dl>
-                <dt>For</dt><dd>Platform teams at growing SaaS companies</dd>
-                <dt>The idea</dt><dd>Deploys without the dread</dd>
-                <dt>Runs on</dt><dd>Homepage, launch post, sales calls</dd>
-                <dt>Due</dt><dd>Launch week</dd>
-              </dl>
-            </div>
-            <div className="mainf">
-              <div className="fr fr169 mf1" />
-              <div className="sk"><svg viewBox="0 0 160 90" /></div>
-            </div>
-            <div className="ftl">
-              <div className="lane"><i style={{ left: "4%", width: "21%" }} /></div>
-              <div className="lane"><i style={{ left: "18%", width: "23%" }} /></div>
-              <div className="lane"><i style={{ left: "48%", width: "34%" }} /></div>
-              <b className="kd" style={{ left: "4%", top: "16%" }} />
-              <b className="kd" style={{ left: "18%", top: "50%" }} />
-              <b className="kd" style={{ left: "48%", top: "84%" }} />
-              <span className="fph" />
-            </div>
-            <div className="dlv">
-              <figure><div className="fr d169" /><figcaption>16:9</figcaption></figure>
-              <figure><div className="fr d916" /><figcaption>9:16</figcaption></figure>
-              <figure><div className="fr d11" /><figcaption>1:1</figcaption></figure>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 const FAQS = [
   ["What do you need from us to start?", "A link to your product, a sense of who needs to be moved, and the moment it is for: a launch, a raise, a sales push. We handle story, boards and motion from there."],
   ["How long does a launch film take?", "It depends on length and how much UI and 3D is involved. We set a schedule at kickoff that you can plan a release date around, and we tell you early if a date is tight."],

@@ -1,9 +1,9 @@
 import { gsap } from "gsap";
 import { initBuddy } from "./buddy";
 import { initGrid } from "./grid";
+import { initHowWeWork } from "./how-we-work";
 import { createEnv, type Shared } from "./kit";
 import { initFaq, initForm, initHeroIntro, initPremise, initReveals, initScroll } from "./page";
-import { initProcess } from "./process";
 import { initWork } from "./work";
 
 export function initSite() {
@@ -14,7 +14,7 @@ export function initSite() {
     initScroll(env, initPremise(env, shared));
     initGrid(env, shared);
     initHeroIntro(env, initBuddy(env, shared).start);
-    initProcess(env);
+    initHowWeWork(env);
     initWork(env);
     initFaq(env);
     initForm(env);

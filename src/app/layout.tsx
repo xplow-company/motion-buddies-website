@@ -1,18 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Caveat, Instrument_Sans } from "next/font/google";
+import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
 const instrument = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-instrument",
-  display: "swap",
-});
-
-const caveat = Caveat({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -49,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${instrument.variable} ${caveat.variable}`} suppressHydrationWarning>
+    <html lang="en" className={instrument.variable} suppressHydrationWarning>
       <body>
         <Script id="js-class" strategy="beforeInteractive">
           {`document.documentElement.classList.add("js")`}
