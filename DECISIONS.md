@@ -33,3 +33,8 @@ The heading's full stop is a `data-buddy` anchor, so the site's ball lands on it
 
 The inline head script sets `history.scrollRestoration = "manual"` and, only on a reload, drops the URL hash before the browser jumps to it.
 A first visit to a link like `/#pricing` keeps its hash, so shared section links still work. Smooth scrolling made the restored position look like the page dragging itself down.
+
+## Smooth scrolling
+
+Lenis drives wheel and trackpad scrolling from the GSAP ticker, so there is one frame loop. It moves the real window scroll, so sticky sections, scroll listeners and the ball keep working unchanged.
+Touch keeps native momentum (Lenis default), and reduced motion skips Lenis entirely. `html.lenis` turns off CSS `scroll-behavior: smooth`, which would otherwise fight Lenis on every frame.
