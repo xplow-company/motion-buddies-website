@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Instrument_Sans } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const instrument = Instrument_Sans({

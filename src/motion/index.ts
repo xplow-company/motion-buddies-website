@@ -4,12 +4,14 @@ import { initGrid } from "./grid";
 import { initHowWeWork } from "./how-we-work";
 import { createEnv, type Shared } from "./kit";
 import { initFaq, initForm, initHeroIntro, initPremise, initReveals, initScroll } from "./page";
+import { initSmoothScroll } from "./smooth";
 import { initWork } from "./work";
 
 export function initSite() {
   const env = createEnv();
   const shared: Shared = { bud: { x: -999, y: -999, sp: 0 }, mfProgress: 0, ripple: () => {} };
   const ctx = gsap.context(() => {
+    initSmoothScroll(env);
     initReveals(env);
     initScroll(env, initPremise(env, shared));
     initGrid(env, shared);
